@@ -1,3 +1,5 @@
+import{Cxmsg} from "../../utils/cxmsg.js";
+
 const dadosGrid=document.querySelector("#dadosGrid");
 const btn_add=document.querySelector("#btn_add");
 const novoColaborador=document.querySelector("#novoColaborador");
@@ -19,6 +21,7 @@ const f_pesqId=document.querySelector("#f_pesqId");
 const f_pesqNome=document.querySelector("#f_pesqNome");
 const f_pesq=document.querySelector("#f_pesq");
 const btn_pesquisar=document.querySelector("#btn_pesquisar");
+const btn_listarTudo=document.querySelector("#btn_listarTudo");
 
 //n=Novo colaborador | e=Editar colaborador
 let modoJanela="n";
@@ -43,6 +46,8 @@ btn_fecharPopupPesq.addEventListener("click",(evt)=>{
 });
 btn_pesq.addEventListener("click",(evt)=>{
     pesquisa.classList.remove("ocutarPopup");
+    f_pesq.value="";
+    f_pesq.focus();
 });
 f_pesqId.addEventListener("click",(evt)=>{
     f_pesq.value="";
@@ -64,14 +69,32 @@ btn_pesquisar.addEventListener("click",(evt)=>{
         fetch(endpointpesq)
         .then(res=>res.json())
         .then(res=>{
-            console.log(res);
+            dadosGrid.innerHTML="";
+            res.forEach(e=> {
+                criarLinha(e);
+            });
         })
         pesquisa.classList.add("ocutarPopup");
     }else{
-        alert("Preencha o campo de pesquisa");
+        const config={
+            titulo:"Alerta",
+            texto:"Digite o nome ou ID do colaborador",
+            cor:"#00f",
+            tipo:"ok",
+            ok:null,
+            sim:null,
+            nao:null
+        }
+        Cxmsg.mostrar(config);
+        // alert("Preencha o campo de pesquisa");
         f_pesq.focus();
     }
 });
+
+btn_listarTudo.addEventListener("click",(evt)=>{
+    carregarTodosColabs();
+});
+
 const criarCxTelefone=(fone,idtel,tipo)=>{
     const divTel=document.createElement("div");
     divTel.setAttribute("class","tel");
@@ -116,7 +139,15 @@ const carregarTodosColabs=()=>{
     .then(res=>{
         dadosGrid.innerHTML="";
         res.forEach(e=> {
-            const divLinha=document.createElement("div");
+            criarLinha(e);
+        });
+    });
+}
+
+carregarTodosColabs();
+
+const criarLinha=(e)=>{
+    const divLinha=document.createElement("div");
             divLinha.setAttribute("class","linhaGrid");
             
             const divc1=document.createElement("div");
@@ -213,11 +244,7 @@ const carregarTodosColabs=()=>{
             divc5.appendChild(img_delete);
     
             dadosGrid.appendChild(divLinha);
-    
-        });
-    });
 }
-carregarTodosColabs();
 const endpoint_tiposColab=`${serv}/tiposcolab`;
 
 fetch(endpoint_tiposColab)
