@@ -14,6 +14,7 @@ class Cxmsg{
         this.config=config;
         const cxmsg_fundo=document.createElement("div");
         cxmsg_fundo.setAttribute("class","cxmsg_fundo");
+        cxmsg_fundo.setAttribute("id","cxmsg_fundo");
 
         const cxmsg=document.createElement("div");
         cxmsg.setAttribute("class","cxmsg");
@@ -31,8 +32,10 @@ class Cxmsg{
         const img_btn_fechar=document.createElement("p");
         img_btn_fechar.setAttribute("id","btn_fechar");
         img_btn_fechar.setAttribute("class","btn_fechar_cxmsg");
-        // img_btn_fechar.setAttribute("src","../imgs/close.svg");
         img_btn_fechar.innerHTML="X";
+        img_btn_fechar.addEventListener("click",(evt)=>{
+            this.fechar();
+        });
         titulo_cxmsg.appendChild(img_btn_fechar);
 
         const corpo_cxmsg=document.createElement("div");
@@ -53,42 +56,40 @@ class Cxmsg{
             btn_ok_cxmsg.setAttribute("class","btn_cxmsg");
             btn_ok_cxmsg.setAttribute("id","btn_ok_cxmsg");
             btn_ok_cxmsg.innerHTML="ok";
+            btn_ok_cxmsg.addEventListener("click",(evt)=>{
+                config.ok();
+                this.fechar();
+            });
             rodape_cxmsg.appendChild(btn_ok_cxmsg);
         }else if(config.tipo =="sn"){
             const btn_sim_cxmsg=document.createElement("button");
             btn_sim_cxmsg.setAttribute("class","btn_cxmsg");
             btn_sim_cxmsg.setAttribute("id","btn_sim_cxmsg");
             btn_sim_cxmsg.innerHTML="sim";
+            btn_sim_cxmsg.addEventListener("click",(evt)=>{
+                config.sim();
+                this.fechar();
+            });
             rodape_cxmsg.appendChild(btn_sim_cxmsg);
     
             const btn_nao_cxmsg=document.createElement("button");
             btn_nao_cxmsg.setAttribute("class","btn_cxmsg");
             btn_nao_cxmsg.setAttribute("id","btn_nao_cxmsg");
             btn_nao_cxmsg.innerHTML="nao";
+            btn_nao_cxmsg.addEventListener("click",(evt)=>{
+                config.nao();
+                this.fechar();
+            });
             rodape_cxmsg.appendChild(btn_nao_cxmsg);
         }
 
         document.body.appendChild(cxmsg_fundo);
         
-        
+    }
+
+    static fechar=()=>{
+        document.getElementById("cxmsg_fundo").remove();
     }
 }
 
 export {Cxmsg}
-
-{/* <div id="cxmsg_fundo" class="cxmsg_fundo ocutarPopup">
-<div id="cxmsg" class="cxmsg">
-    <div id="titulo_cxmsg" class="titulo_cxmsg">
-        <p>Título</p>
-        <img src="../imgs/close.svg" alt="" id="btn_fechar" class="btn_fechar_cxmsg">
-    </div>
-    <div id="corpo_cxmsg" class="corpo_cxmsg">
-        <p>Mensagem</p>
-    </div>
-    <div id="rodape_cxmsg" class="rodape_cxmsg">
-        <button id="btn_ok_cxmsg" class="btn_cxmsg">ok</button>
-        <button id="btn_sim_cxmsg" class="btn_cxmsg">sim</button>
-        <button id="btn_nao_cxmsg" class="btn_cxmsg">não</button>
-    </div>
-</div>
-</div> */}

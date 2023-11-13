@@ -326,19 +326,21 @@ body{
     align-items: center;
     background-color: #aaa;
     color: #000;
-    padding: 5px;
-
+    padding: 20px 5px;
 }
 .rodape_cxmsg{
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 5px;
-    background-color: blue;
+    background-color: #555;
     border-radius: 0px 0px 10px 10px;
 
 }
 .btn_fechar_cxmsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #f00;
     width: 20px;
     cursor: pointer;
